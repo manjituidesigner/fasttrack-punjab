@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const introOverlay = document.getElementById('introOverlay');
     const investorOverlay = document.getElementById('introOverlayInvestor');
     const approvalsOverlay = document.getElementById('introOverlayApprovals');
+    const fourthOverlay = document.getElementById('introOverlayFourth');
 
     // Theme toggle functionality only
     if (toggleBtn && iconEl) {
@@ -165,5 +166,65 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 9000);
 
         }, secondTotal);
+    }
+
+    // After Approvals overlay hides, show Fourth overlay
+    if (fourthOverlay) {
+        const firstTotal = 2000 + 3500; // initial delay + first overlay
+        const investorDuration = 10000;
+        const approvalsDuration = 9000;
+        const thirdTotal = firstTotal + investorDuration + approvalsDuration;
+
+        setTimeout(function () {
+            fourthOverlay.classList.add('intro-start');
+
+            const smallText = document.querySelector('.fourth-small-text');
+            const heading = document.querySelector('.fourth-heading');
+            const points = document.querySelectorAll('.fourth-point-item');
+
+            if (smallText) {
+                smallText.style.opacity = '0';
+                smallText.style.transform = 'translateY(20px)';
+            }
+
+            if (heading) {
+                heading.style.opacity = '0';
+                heading.style.transform = 'translateY(20px)';
+            }
+
+            points.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+            });
+
+            setTimeout(async () => {
+                if (smallText) {
+                    smallText.classList.add('approvals-small-pop');
+                }
+
+                await new Promise(resolve => setTimeout(resolve, 250));
+
+                if (heading) {
+                    heading.classList.add('approvals-heading-pop');
+                }
+
+                await new Promise(resolve => setTimeout(resolve, 300));
+
+                for (let i = 0; i < points.length; i++) {
+                    await new Promise(resolve => {
+                        setTimeout(() => {
+                            points[i].classList.add('approvals-pill-pop');
+                            resolve();
+                        }, 200 * i);
+                    });
+                }
+            }, 100);
+
+            // Hide fourth overlay after some time
+            setTimeout(function () {
+                fourthOverlay.classList.add('intro-hide');
+            }, 9000);
+
+        }, thirdTotal);
     }
 });

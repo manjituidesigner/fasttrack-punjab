@@ -235,6 +235,7 @@ i, .fa, .fas, .far, .fab {
   font-size: clamp(3.6rem, 5.5vw, 4.8rem);
   font-size: 82px;
   font-weight: 500;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
  }
 
  .investor-highlight {
@@ -243,6 +244,7 @@ i, .fa, .fas, .far, .fab {
 
  .investor-subheading {
   font-size: 1.7rem;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
  }
 
  .investor-sub-highlight {
@@ -287,18 +289,20 @@ i, .fa, .fas, .far, .fab {
  }
 
  .approvals-small-text {
- font-size: 1.2rem;
+ font-size: 1.6rem;
  font-weight: 500;
  letter-spacing: 0.05em;
  text-transform: uppercase;
  color: #ffffff;
  margin-bottom: 0.75rem;
- }
+ text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
 
  .approvals-heading {
  font-size: clamp(3.1rem, 5.5vw, 4.3rem);
  font-weight: 700;
  color: #ffffff;
+ text-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
 }
 
  .approvals-number {
@@ -380,6 +384,101 @@ i, .fa, .fas, .far, .fab {
  .approvals-point-item {
   width: auto;
   min-width: 260px;
+ }
+}
+
+ /* Fourth overlay: Punjab Right to Business Act */
+.intro-overlay-fourth {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+.fourth-intro {
+ max-width: 900px;
+}
+
+.fourth-small-text {
+ font-size: 1.1rem;
+ font-weight: 500;
+ letter-spacing: 0.08em;
+ text-transform: uppercase;
+ color: #ffffff;
+ margin-bottom: 0.75rem;
+ text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.fourth-heading {
+ font-size: clamp(2.4rem, 4.3vw, 3.4rem);
+ font-weight: 700;
+ color: #ffffff;
+ line-height: 1.15;
+ text-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+.fourth-highlight-main {
+ color: #ffc933;
+ font-weight: 800;
+ display: block;
+}
+
+.fourth-highlight-sub {
+ color: #ffffff;
+ font-weight: 700;
+ display: block;
+}
+
+.fourth-points {
+ padding-top: 0.75rem;
+ display: flex;
+ flex-direction: column;
+ gap: 0.6rem;
+}
+
+.fourth-point-item {
+ color: #ffffff;
+ font-size: 16px;
+ line-height: 24px;
+ background-color: rgba(2, 21, 73, 0.82);
+ border-radius: 999px;
+ padding: 0.65rem 1.7rem;
+ width: 100%;
+ justify-content: center;
+ text-align: left;
+}
+
+.fourth-point-item i {
+ color: #ffffff;
+ font-size: 22px;
+ margin-right: 8px;
+}
+
+.fourth-point-item span {
+ text-transform: capitalize;
+}
+
+@media (min-width: 768px) {
+ .fourth-points {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+ }
+
+ .fourth-point-item {
+  width: auto;
+  padding-left: 2.4rem;
+  padding-right: 2.4rem;
+ }
+
+ .fourth-point-item:first-child {
+  min-width: 520px;  /* longer pill on top */
+ }
+
+ .fourth-point-item:last-child {
+  min-width: 260px;  /* shorter pill below */
+  align-self: center;
  }
 }
 
