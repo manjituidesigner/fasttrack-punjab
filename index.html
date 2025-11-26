@@ -12,42 +12,61 @@
    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
    crossorigin="anonymous"
   />
+  <link
+   rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+   integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+   crossorigin="anonymous"
+   referrerpolicy="no-referrer"
+  />
+  <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
  </head>
  <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Fasttrack Punjab</a>
-    <button
-     class="navbar-toggler"
-     type="button"
-     data-bs-toggle="collapse"
-     data-bs-target="#navbarSupportedContent"
-     aria-controls="navbarSupportedContent"
-     aria-expanded="false"
-     aria-label="Toggle navigation"
-    >
-     <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-       <a class="nav-link active" aria-current="page" href="#home">Home</a>
-      </li>
-      <li class="nav-item">
-       <a class="nav-link" href="#about">About</a>
-      </li>
-      <li class="nav-item">
-       <a class="nav-link" href="#services">Services</a>
-      </li>
-      <li class="nav-item">
-       <a class="nav-link" href="#contact">Contact</a>
-      </li>
+ <nav class="navbar navbar-dark header-bar py-2">
+  <div class="container d-flex align-items-center justify-content-between">
+   <div class="d-flex align-items-center gap-3">
+    <img src="assets/images/govt-logo-white.png" alt="Logo" class="header-logo" />
+    <img src="assets/images/invest-punjab-logo-white.png" alt="Invest Punjab" class="header-logo" />
+   </div>
+
+   <div class="d-flex align-items-center gap-3 ms-auto">
+    <div class="dropdown">
+     <button
+      class="btn btn-outline-light btn-sm dropdown-toggle d-flex align-items-center gap-2"
+      type="button"
+      id="menuDropdown"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+     >
+      <span>Menu</span>
+      <span class="navbar-toggler-icon small"></span>
+     </button>
+     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
+      <li><a class="dropdown-item" href="#home">Home</a></li>
+      <li><a class="dropdown-item" href="#about">About</a></li>
+      <li><a class="dropdown-item" href="#services">Services</a></li>
+      <li><a class="dropdown-item" href="#contact">Contact</a></li>
      </ul>
     </div>
+
+    <a href="#" class="btn btn-signin btn-sm d-flex align-items-center gap-2">
+     <span>Sign in</span>
+     <i class="fa-solid fa-user"></i>
+    </a>
+
+    <button
+     id="themeToggle"
+     class="header-theme-btn d-flex align-items-center justify-content-center"
+     type="button"
+     aria-label="Toggle theme"
+    >
+     <i class="lni lni-sun-1 theme-icon"></i>
+    </button>
    </div>
-  </nav>
+  </div>
+ </nav>
 
   <!-- Hero Section with Background Video -->
   <section id="home" class="hero-video-section d-flex align-items-center">
@@ -55,129 +74,29 @@
     <source src="/assets/images/Fasttrack -web- video2.mp4" type="video/mp4" />
     Your browser does not support the video tag.
    </video>
-   <div class="container hero-content py-5">
-    <div class="row align-items-center justify-content-center">
-     <div class="col-12 col-lg-7 text-center text-lg-start">
-      <h1 class="display-5 fw-bold mb-3">
-       Welcome to Fasttrack Punjab
-      </h1>
-      <p class="lead mb-4">
-       A modern, mobile-friendly Bootstrap layout ready for your content. This
-       page automatically adapts to mobiles, tablets, and desktops.
-      </p>
-      <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center justify-content-lg-start">
-       <a href="#services" class="btn btn-primary btn-lg">Get Started</a>
-       <a href="#about" class="btn btn-outline-light btn-lg">Learn More</a>
+
+   <!-- Intro overlay that plays once on load -->
+   <div class="intro-overlay" id="introOverlay">
+    <div class="intro-overlay-inner container">
+     <div class="row align-items-center">
+      <div class="col-12 col-md-6 intro-image-left-wrapper">
+       <img
+        src="assets/images/welcome-punjab.png"
+        alt="Welcome to Punjab"
+        class="intro-image intro-image-left"
+       />
+      </div>
+      <div class="col-12 col-md-6 intro-image-right-wrapper text-md-end mt-3 mt-md-0">
+       <img
+        src="assets/images/bhagwant-maan.png"
+        alt="Bhagwant Mann"
+        class="intro-image intro-image-right"
+       />
       </div>
      </div>
     </div>
    </div>
   </section>
-
-  <!-- About Section -->
-  <section id="about" class="py-5">
-   <div class="container">
-    <div class="row justify-content-center mb-4">
-     <div class="col-12 col-lg-8 text-center">
-      <h2 class="fw-bold mb-3">About Us</h2>
-      <p class="text-muted mb-0">
-       Replace this text with information about Fasttrack Punjab. The layout is
-       fully responsive using Bootstrap's grid system and spacing utilities.
-      </p>
-     </div>
-    </div>
-   </div>
-  </section>
-
-  <!-- Services Section -->
-  <section id="services" class="py-5 bg-light">
-   <div class="container">
-    <div class="row mb-4">
-     <div class="col-12 text-center">
-      <h2 class="fw-bold mb-3">Our Services</h2>
-      <p class="text-muted mb-0">
-       Cards below stack on mobile and align in columns on larger screens.
-      </p>
-     </div>
-    </div>
-    <div class="row g-4">
-     <div class="col-12 col-md-6 col-lg-4">
-      <div class="card h-100 shadow-sm">
-       <div class="card-body">
-        <h5 class="card-title">Service One</h5>
-        <p class="card-text">
-         Short description of your first key service. This card is responsive
-         and adjusts its width with the grid.
-        </p>
-       </div>
-      </div>
-     </div>
-     <div class="col-12 col-md-6 col-lg-4">
-      <div class="card h-100 shadow-sm">
-       <div class="card-body">
-        <h5 class="card-title">Service Two</h5>
-        <p class="card-text">
-         Another important service offering. On small screens, cards appear one
-         per row.
-        </p>
-       </div>
-      </div>
-     </div>
-     <div class="col-12 col-md-6 col-lg-4">
-      <div class="card h-100 shadow-sm">
-       <div class="card-body">
-        <h5 class="card-title">Service Three</h5>
-        <p class="card-text">
-         Add or customize more services as you need. You can also include
-         icons or images in the cards.
-        </p>
-       </div>
-      </div>
-     </div>
-    </div>
-   </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="py-5">
-   <div class="container">
-    <div class="row justify-content-center mb-4">
-     <div class="col-12 col-lg-8 text-center">
-      <h2 class="fw-bold mb-3">Contact Us</h2>
-      <p class="text-muted mb-4">
-       Use this simple responsive form or replace it with your preferred
-       contact method.
-      </p>
-     </div>
-    </div>
-    <div class="row justify-content-center">
-     <div class="col-12 col-md-8 col-lg-6">
-      <form>
-       <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Your name" />
-       </div>
-       <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="name@example.com" />
-       </div>
-       <div class="mb-3">
-        <label for="message" class="form-label">Message</label>
-        <textarea class="form-control" id="message" rows="4" placeholder="How can we help?"></textarea>
-       </div>
-       <button type="submit" class="btn btn-primary w-100">Send Message</button>
-      </form>
-     </div>
-    </div>
-   </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="py-3 bg-dark text-white-50">
-   <div class="container text-center small">
-    &copy; <span id="year"></span> Fasttrack Punjab. All rights reserved.
-   </div>
-  </footer>
 
   <!-- Bootstrap 5 JS Bundle (includes Popper) -->
   <script
@@ -185,8 +104,6 @@
    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
    crossorigin="anonymous"
   ></script>
-  <script>
-   document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script src="script.js"></script>
  </body>
  </html>

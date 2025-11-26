@@ -30,3 +30,156 @@
   z-index: 3;
  }
 
+ .intro-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+ }
+
+ .intro-overlay.intro-start {
+  opacity: 1;
+  visibility: visible;
+  animation: intro-overlay-fade-in 0.7s forwards;
+ }
+
+ .intro-overlay.intro-hide {
+  animation: intro-overlay-fade 0.7s forwards;
+ }
+
+ .intro-overlay-inner {
+  /* layout handled by Bootstrap row/col inside */
+ }
+
+ .intro-image-left-wrapper,
+ .intro-image-right-wrapper {
+  /* columns sizing handled by Bootstrap */
+ }
+
+ .intro-image {
+  max-width: 100%;
+  height: auto;
+ }
+
+ .intro-image-left {
+  filter: blur(12px);
+  opacity: 0;
+  animation: intro-left-blur 3.5s forwards;
+ }
+
+ .intro-image-right {
+  opacity: 0;
+  animation: intro-right-fade 3.5s forwards;
+  animation-delay: 0.5s;
+ }
+
+ @keyframes intro-left-blur {
+  0% {
+   opacity: 0;
+   filter: blur(16px);
+  }
+  40% {
+   opacity: 1;
+   filter: blur(6px);
+  }
+  100% {
+   opacity: 1;
+   filter: blur(0);
+  }
+ }
+
+ @keyframes intro-right-fade {
+  0% {
+   opacity: 0;
+  }
+  40% {
+   opacity: 0.6;
+  }
+  100% {
+   opacity: 1;
+  }
+ }
+
+ @keyframes intro-overlay-fade-in {
+  0% {
+   opacity: 0;
+  }
+  100% {
+   opacity: 1;
+  }
+ }
+
+ @keyframes intro-overlay-fade {
+  0% {
+   opacity: 1;
+  }
+  100% {
+   opacity: 0;
+   visibility: hidden;
+  }
+ }
+
+ .header-logo {
+  height: 55px;
+  width: auto;
+  margin-left: 10px;
+ }
+
+ .header-theme-btn {
+  min-height: 38px;
+  min-width: 38px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  color: #ffffff;
+ }
+
+ .header-theme-btn .theme-icon {
+  font-size: 1.2rem;
+ }
+
+ .header-bar {
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+ }
+
+ .btn {
+  min-height: 38px;
+ }
+
+ .btn-signin {
+  background-color: #db4d00;
+  border-color: #db4d00;
+  color: #ffffff;
+ }
+
+ .btn-signin i {
+  font-size: 1.1rem;
+ }
+
+ .btn-signin:hover,
+ .btn-signin:focus {
+  background-color: #c34500;
+  border-color: #c34500;
+  color: #ffffff;
+ }
+
+ body.dark-theme {
+  background-color: #121212;
+  color: #f8f9fa;
+ }
+ i.fa-solid.fa-user {
+    font-size: 13px;
+}
+
+ /* Navbar stays transparent even in dark theme */
