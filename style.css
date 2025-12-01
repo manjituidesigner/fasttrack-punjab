@@ -97,7 +97,6 @@ i, .fa, .fas, .far, .fab {
     font-style: normal;
 }
  
- 
  .hero-video-section {
   position: relative;
   min-height: 90vh;
@@ -151,7 +150,7 @@ i, .fa, .fas, .far, .fab {
  }
 
  .intro-image {
-  max-width: 100%;
+  max-width: 80%;
   height: auto;
  }
 
@@ -173,6 +172,106 @@ img.intro-image.intro-image-right {
 }
 
 @media (max-width: 767.98px) {
+ /* Mobile header & hero adjustments to match mobile design */
+ .header-bar {
+  position: relative;
+  background: #1f73d1;
+ }
+
+ .navbar.header-bar .container {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+ }
+
+ .header-logo {
+  height: 40px;
+  margin-left: 4px;
+ }
+
+ .navbar.header-bar .d-flex.align-items-center.gap-3.ms-auto {
+  gap: 1.5rem;
+ }
+
+ /* Hide dropdown menu on mobile header */
+ .header-bar .dropdown {
+  display: none;
+ }
+
+ /* Show only user icon (no button background or text) */
+ .header-bar .btn-signin {
+  background: transparent;
+  border: none;
+  padding: 0;
+  min-height: auto;
+ }
+
+ .header-bar .btn-signin span {
+  display: none;
+ }
+
+ .header-bar .btn-signin i {
+  font-size: 1.4rem;
+ }
+
+ /* Theme toggle icon sizing on mobile */
+ .header-theme-btn {
+  background-color: transparent;
+  min-height: 32px;
+  min-width: 32px;
+ }
+
+ .hero-video-section {
+  min-height: 100vh;
+  height: 100vh;
+  font-size: 90%;
+ }
+
+ .hero-video-section video {
+  object-position: center top;
+ }
+
+ .intro-overlay .intro-overlay-inner {
+  padding-top: 4.5rem;
+ }
+ 
+ /* Investor First section */
+ .investor-heading {
+  font-size: 2.8rem !important; /* Reduced from larger size */
+  line-height: 1.1;
+ }
+ 
+ .investor-subheading {
+  font-size: 1.4rem !important; /* Reduced from 1.7rem */
+  margin-bottom: 1.5rem !important;
+ }
+ 
+ .investor-pill-item {
+  font-size: 0.95rem !important; /* Slightly smaller pill text */
+  padding: 0.5rem 1rem !important;
+ }
+ 
+ /* Approvals section */
+ .approvals-heading {
+  font-size: 2.5rem !important; /* Reduced from larger size */
+  line-height: 1.1;
+ }
+ 
+ .approvals-small-text {
+  font-size: 1.2rem !important; /* Reduced from 1.6rem */
+  margin-bottom: 0.5rem !important;
+ }
+ 
+ .approvals-point-item {
+  font-size: 16px !important; /* Reduced from 18px */
+  padding: 0.5rem 1.25rem !important;
+  line-height: 1.4;
+ }
+ 
+ .approvals-point-item i {
+  font-size: 22px !important; /* Slightly smaller icon */
+ }
+
+ /* Image sizing */
  .intro-image {
   max-width: 55%;
   width: 55%;
@@ -189,15 +288,21 @@ img.intro-image.intro-image-right {
   justify-content: flex-start;
  }
 
- .intro-image-left {
+ /* .intro-image-left {
   margin-top: 80px;
  }
   .intro-image-right {
   margin-top: -60px;
- }
+ } */
 
  .intro-image-right-wrapper {
   justify-content: flex-end;
+ }
+}
+
+@media (min-width: 768px) {
+ .intro-image-right {
+  margin-top: 20px;
  }
 }
 
@@ -638,6 +743,8 @@ img.intro-image.intro-image-right {
  .hero-action-strip-wrapper {
   border-radius: 1.25rem;
   flex-direction: column;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
  }
 
  .hero-action-card {
