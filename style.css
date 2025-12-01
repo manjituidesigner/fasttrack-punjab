@@ -100,8 +100,8 @@ i, .fa, .fas, .far, .fab {
  
  .hero-video-section {
   position: relative;
-  min-height: 85vh;
-  height: 85vh;
+  min-height: 90vh;
+  height: 90vh;
   color: #fff;
   overflow: hidden;
  }
@@ -162,16 +162,43 @@ i, .fa, .fas, .far, .fab {
  }
 
  .intro-image-right {
-  opacity: 0;
-  animation: intro-right-fade 3.5s forwards;
-  animation-delay: 0.5s;
+ opacity: 0;
+ animation: intro-right-fade 3.5s forwards;
+ animation-delay: 0.5s;
+}
+
+img.intro-image.intro-image-right {
+    position: relative;
+    display: block;
+}
+
+@media (max-width: 767.98px) {
+ .intro-image {
+  max-width: 55%;
+  width: 55%;
+  margin: 0 auto;
  }
 
- img.intro-image.intro-image-right {
-    position: relative;
-    top: 250;
-    display: flex;
-    top:70px;
+ .intro-image-left-wrapper,
+ .intro-image-right-wrapper {
+  display: flex;
+  align-items: flex-end;
+ }
+
+ .intro-image-left-wrapper {
+  justify-content: flex-start;
+ }
+
+ .intro-image-left {
+  margin-top: 80px;
+ }
+  .intro-image-right {
+  margin-top: -60px;
+ }
+
+ .intro-image-right-wrapper {
+  justify-content: flex-end;
+ }
 }
 
  @keyframes intro-left-blur {
@@ -623,11 +650,13 @@ i, .fa, .fas, .far, .fab {
  background-color: #f1f5f9;
 }
 
+
+
 .invest-eyebrow {
  font-size: 45px;
  font-weight: 400;
  color: #1C1E2A;
- margin-bottom: 0.75rem;
+ margin-bottom: 50px;
 }
 
 .invest-eyebrow span {
@@ -638,7 +667,7 @@ i, .fa, .fas, .far, .fab {
  font-size: 2.4rem;
  line-height: 1.25;
  color: #1C1E2A;
- font-weight: 500;
+ font-weight: 300;
  margin-bottom: 1.75rem;
 }
 
@@ -681,7 +710,7 @@ i, .fa, .fas, .far, .fab {
  align-items: center;
  gap: 0.45rem;
  padding: 0.8rem 1.7rem;
- border-radius: 999px;
+ border-radius: 10px;
  font-size: 0.95rem;
  font-weight: 600;
  text-decoration: none;
@@ -690,7 +719,7 @@ i, .fa, .fas, .far, .fab {
 }
 
 .btn-invest-primary {
- background-color: #f97316;
+ background-color: #DB4D00;
  color: #fff;
  box-shadow: 0 10px 20px rgba(248, 113, 22, 0.35);
 }
@@ -707,9 +736,10 @@ i, .fa, .fas, .far, .fab {
 }
 
 .btn-invest-ghost {
- background-color: #fff7ed;
- color: #1C1E2A;
- border-color: #fed7aa;
+ background-color: #ffffff;
+    color: #DB4D00;
+    border-color: #DB4D00;
+     box-shadow: 0 10px 20px rgba(248, 113, 22, 0.35);
 }
 
 .btn-invest-ghost i {
@@ -717,8 +747,8 @@ i, .fa, .fas, .far, .fab {
 }
 
 .btn-invest-ghost:hover {
- background-color: #fed7aa;
- color: #1C1E2A;
+ background-color: #DB4D00;
+ color: #ffffff;
 }
 
 .invest-image-box {
