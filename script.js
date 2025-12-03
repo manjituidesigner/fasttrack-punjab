@@ -284,4 +284,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Start the looping intro sequence
     runIntroSequence();
+
+    // Reforms carousel arrows
+    const carouselViewport = document.querySelector('.reforms-carousel-viewport');
+    const carouselTrack = document.querySelector('.reforms-carousel-track');
+    const prevArrow = document.querySelector('.reforms-arrow-prev');
+    const nextArrow = document.querySelector('.reforms-arrow-next');
+
+    function getVisibleCards() {
+        if (!carouselViewport) return 3;
+        const width = carouselViewport.clientWidth;
+        if (width < 576) return 1;
+        if (width < 992) return 2;
+        return 3;
+    }
+
+    function scrollByCards(direction) {
+        if (!carouselViewport || !carouselTrack) return;
+        const cards = carouselTrack.querySelectorAll('.reform-card');
+        if (!cards.length) return;
+
+        // Scroll by one full viewport width so 3 cards are fully visible on desktop
+        const step = carouselViewport.clientWidth;
+        carouselViewport.scrollBy({ left: direction * step, behavior: 'smooth' });
+    }
+
+    if (prevArrow && nextArrow) {
+        prevArrow.addEventListener('click', () => scrollByCards(-1));
+        nextArrow.addEventListener('click', () => scrollByCards(1));
+    }
+
+    const backToTopBtn = document.getElementById('backToTop');
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 });

@@ -221,8 +221,8 @@ img.intro-image.intro-image-right {
  }
 
  .hero-video-section {
-  min-height: 100vh;
-  height: 100vh;
+  min-height: 70vh;
+  height: 70vh;
   font-size: 90%;
  }
 
@@ -231,9 +231,26 @@ img.intro-image.intro-image-right {
  }
 
  .intro-overlay .intro-overlay-inner {
-  padding-top: 4.5rem;
+  padding-top: 3rem;
  }
  
+ /* Global typography tweaks for small screens */
+ body {
+  font-size: 0.95rem;
+ }
+
+ h1, .h1 {
+  font-size: 1.9rem;
+ }
+
+ h2, .h2 {
+  font-size: 1.5rem;
+ }
+
+ h3, .h3 {
+  font-size: 1.25rem;
+ }
+
  /* Investor First section */
  .investor-heading {
   font-size: 2.8rem !important; /* Reduced from larger size */
@@ -245,9 +262,25 @@ img.intro-image.intro-image-right {
   margin-bottom: 1.5rem !important;
  }
  
+ /* Make each investor bullet its own pill on mobile */
+ .investor-pill {
+  background-color: transparent;
+  padding: 0;
+ }
+ 
  .investor-pill-item {
   font-size: 0.95rem !important; /* Slightly smaller pill text */
-  padding: 0.5rem 1rem !important;
+  padding: 0.4rem 1.3rem !important;
+  text-align: center;
+  line-height: 1.15;
+  background-color: rgba(11, 41, 80, 0.9);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0.15rem 0;
+  white-space: normal;
  }
  
  /* Approvals section */
@@ -263,8 +296,9 @@ img.intro-image.intro-image-right {
  
  .approvals-point-item {
   font-size: 16px !important; /* Reduced from 18px */
-  padding: 0.5rem 1.25rem !important;
-  line-height: 1.4;
+  padding: 0.45rem 1.25rem !important;
+  line-height: 1.3;
+  text-align: center;
  }
  
  .approvals-point-item i {
@@ -273,19 +307,19 @@ img.intro-image.intro-image-right {
 
  /* Image sizing */
  .intro-image {
-  max-width: 55%;
-  width: 55%;
+  max-width: 65%;
+  width: 65%;
   margin: 0 auto;
  }
 
  .intro-image-left-wrapper,
  .intro-image-right-wrapper {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
  }
 
  .intro-image-left-wrapper {
-  justify-content: flex-start;
+  justify-content: center;
  }
 
  /* .intro-image-left {
@@ -297,6 +331,71 @@ img.intro-image.intro-image-right {
 
  .intro-image-right-wrapper {
   justify-content: flex-end;
+ }
+
+ /* Fourth overlay: mobile tweaks - keep titles, hide tick icons, center text */
+ .fourth-points {
+  align-items: center;
+ }
+
+ .fourth-point-item {
+	justify-content: center;
+	text-align: center !important;
+	line-height: 1.3 !important;
+	padding: 0.45rem 1.7rem !important;
+	width: auto;
+	margin: 0.25rem auto;
+ }
+
+ .fourth-point-item i {
+	display: none;
+ }
+
+ .fourth-small-text,
+ .fourth-heading {
+  display: block;
+ }
+
+ /* Invest Punjab content section typography */
+ .invest-eyebrow {
+  font-size: 1.8rem;
+  margin-bottom: 2.2rem;
+ }
+
+ .invest-heading {
+  font-size: 1.55rem;
+ }
+
+ .invest-list {
+  font-size: 0.9rem;
+ }
+
+ .btn-invest-primary,
+ .btn-invest-ghost {
+  font-size: 0.9rem;
+  padding: 0.7rem 1.4rem;
+ }
+
+ /* Hero action buttons */
+ .hero-action-card {
+  font-size: 0.95rem;
+ }
+
+ /* Reorder image/text on mobile for content sections */
+ .invest-punjab-section .row > .col-lg-5 {
+  order: 1;
+ }
+
+ .invest-punjab-section .row > .col-lg-7 {
+  order: 2;
+ }
+
+ .inprinciple-section .row > .col-lg-5 {
+  order: 1;
+ }
+
+ .inprinciple-section .row > .col-lg-7 {
+  order: 2;
  }
 }
 
@@ -385,16 +484,25 @@ img.intro-image.intro-image-right {
  }
 
  .investor-pill {
-  background-color: rgba(11, 41, 80, 0.9);
-  border-radius: 50px;
-  padding: 1.1rem 2.4rem;
- }
+	background-color: transparent;
+	border-radius: 0;
+	padding: 0;
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+}
 
- .investor-pill-item {
-  color: #ffffff;
-  white-space: nowrap;
-  font-size: 1.05rem;
- }
+.investor-pill-item {
+	color: #ffffff;
+	white-space: nowrap;
+	font-size: 1.05rem;
+	background-color: rgba(2, 21, 73, 0.8);
+	border-radius: 999px;
+	padding: 0.6rem 1.6rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+}
 
  .investor-pill-item i {
  color: #ffffff;
@@ -760,10 +868,10 @@ img.intro-image.intro-image-right {
 
 
 .invest-eyebrow {
- font-size: 45px;
+ font-size: clamp(1.8rem, 3vw, 2.4rem);
  font-weight: 400;
  color: #1C1E2A;
- margin-bottom: 50px;
+ margin-bottom: 3rem;
 }
 
 .invest-eyebrow span {
@@ -771,7 +879,7 @@ img.intro-image.intro-image-right {
 }
 
 .invest-heading {
- font-size: 2.4rem;
+ font-size: clamp(1.75rem, 2.7vw, 2.4rem);
  line-height: 1.25;
  color: #1C1E2A;
  font-weight: 300;
@@ -786,14 +894,14 @@ img.intro-image.intro-image-right {
 .invest-heading .highlight-deemed {
  color: #1B65B9;
  font-weight: 700;
- display: block;
+ display: inline-block;
 }
 
 .invest-list {
  padding-left: 1.25rem;
  margin-bottom: 2rem;
  color: #1C1E2A;
- font-size: 0.98rem;
+ font-size: clamp(0.95rem, 1.1vw, 1.02rem);
  line-height: 1.7;
 }
 
@@ -882,4 +990,322 @@ img.intro-image.intro-image-right {
  .invest-image-box {
   margin: 2.25rem auto 0;
  }
+}
+
+/* In-Principle Approval section */
+.inprinciple-section {
+ padding: 3.5rem 0 4rem;
+ background-color: #E8E9EE;
+}
+
+.inprinciple-section .row {
+ border: none;
+ border-radius: 0;
+ background-color: transparent;
+ padding: 2.25rem 0;
+}
+
+.inprinciple-image-box {
+ border-radius: 1.25rem;
+ overflow: hidden;
+ box-shadow: 0 16px 35px rgba(15, 23, 42, 0.25);
+}
+
+.inprinciple-image-box img {
+ display: block;
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+}
+
+.inprinciple-content {
+ color: #1C1E2A;
+}
+
+.inprinciple-heading {
+ font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+ font-weight: 400;
+ line-height: 1.3;
+ margin-bottom: 1.5rem;
+}
+
+.inprinciple-heading .highlight-approval {
+ color: #f97316;
+ font-weight: 700;
+}
+
+.inprinciple-heading .highlight-act {
+ color: #1B65B9;
+ font-weight: 700;
+}
+
+.inprinciple-list {
+ padding-left: 1.25rem;
+ margin-bottom: 1.8rem;
+ font-size: clamp(0.95rem, 1.05vw, 1rem);
+ line-height: 1.7;
+ color: #1C1E2A;
+}
+
+.inprinciple-list li + li {
+ margin-top: 0.4rem;
+}
+
+.inprinciple-list li span {
+ font-weight: 600;
+}
+
+@media (max-width: 991.98px) {
+ .inprinciple-section {
+  padding-top: 2.75rem;
+ }
+
+ .inprinciple-section .row {
+  padding: 1.75rem 0;
+ }
+
+ .inprinciple-heading {
+  font-size: 1.5rem;
+ }
+
+ .inprinciple-list {
+  font-size: 0.9rem;
+ }
+
+ .inprinciple-image-box {
+  margin-bottom: 1.75rem;
+ }
+}
+
+/* Desktop alignment tweaks for In-Principle section */
+@media (min-width: 992px) {
+ .inprinciple-section .row.align-items-center {
+	 align-items: stretch !important;
+ }
+
+ .inprinciple-section .col-lg-5,
+ .inprinciple-section .col-lg-7 {
+	 display: flex;
+	 align-items: stretch;
+ }
+
+ .inprinciple-image-box,
+ .inprinciple-content {
+	 height: 100%;
+ }
+
+ .inprinciple-content {
+	 display: flex;
+	 flex-direction: column;
+ }
+
+ .inprinciple-content .invest-actions {
+	 margin-top: auto;
+	 padding-top: 1.25rem;
+ }
+}
+
+.reforms-carousel-section {
+ padding: 3.5rem 0 4rem;
+ background-color: #020617;
+ color: #1C1E2A;
+}
+
+.reforms-carousel-wrapper {
+ position: relative;
+ display: flex;
+ justify-content: center;
+ padding: 0 3.5rem;
+}
+
+.reforms-carousel-viewport {
+ flex: 1;
+ overflow: hidden;
+}
+
+.reforms-carousel-track {
+ display: flex;
+ gap: 1.25rem;
+ scroll-behavior: smooth;
+}
+
+.reforms-arrows {
+ position: absolute;
+ inset: 0;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ pointer-events: none;
+}
+
+.reform-card {
+ flex: 0 0 calc(33.333% - 0.85rem);
+ background-color: #ffffff;
+ border-radius: 1.25rem;
+ box-shadow: 0 18px 35px rgba(15, 23, 42, 0.35);
+ display: flex;
+ flex-direction: column;
+ overflow: hidden;
+}
+
+.reform-card-image {
+ padding: 0.8rem 0.9rem 0.2rem;
+}
+
+.reform-card-image img {
+ display: block;
+ width: 100%;
+ height: 170px;
+ object-fit: cover;
+ border-radius: 1rem;
+ 
+}
+
+.reform-card-body {
+ padding: 1rem 1.1rem 1.1rem;
+ display: flex;
+ flex-direction: column;
+ gap: 0.65rem;
+ max-height: 265px;
+ overflow-y: auto;
+}
+
+.reform-card-heading {
+ font-size: 1.02rem;
+ line-height: 1.4;
+ margin: 0;
+ font-weight: 500;
+}
+
+.reform-card-highlight-orange { color: #f97316; font-weight: 700; }
+.reform-card-highlight-blue { color: #1B65B9; font-weight: 700; }
+
+.reform-card-list {
+ padding-left: 1.1rem;
+ margin: 0;
+ font-size: 0.92rem;
+ line-height: 1.5;
+}
+
+.reform-card-list li + li {
+ margin-top: 0.25rem;
+}
+
+.reforms-arrow {
+ position: relative;
+ width: 40px;
+ height: 40px;
+ border-radius: 999px;
+ border: 2px solid #ffffff;
+ background-color: transparent;
+ color: #ffffff;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+ pointer-events: auto;
+}
+
+.reforms-arrow i {
+ font-size: 0.9rem;
+}
+
+.reforms-arrow-next {
+ border-color: #f97316;
+ color: #f97316;
+}
+
+.reforms-arrow:hover {
+ transform: translateY(-1px);
+ background-color: #ffffff11;
+}
+
+.reforms-arrow-next:hover {
+ background-color: #f97316;
+ color: #ffffff;
+}
+
+.reform-card-body::-webkit-scrollbar {
+ width: 6px;
+}
+
+.reform-card-body::-webkit-scrollbar-track {
+ background-color: #e5e7eb;
+ border-radius: 999px;
+}
+
+.reform-card-body::-webkit-scrollbar-thumb {
+ background-color: #cbd5f5;
+ border-radius: 999px;
+}
+
+@media (max-width: 991.98px) {
+ .reforms-carousel-wrapper {
+  gap: 1rem;
+ }
+
+ .reform-card {
+  flex: 0 0 calc(50% - 0.7rem);
+ }
+}
+
+@media (max-width: 767.98px) {
+ .reforms-carousel-section {
+  padding: 2.5rem 0 3rem;
+ }
+
+ .reforms-carousel-wrapper {
+  display: block;
+  padding: 0 1.25rem;
+ }
+
+ .reforms-carousel-viewport {
+  width: 100%;
+ }
+
+ .reform-card {
+  flex: 0 0 100%;
+ }
+
+ .reforms-carousel-track {
+  gap: 0;
+ }
+
+ .reforms-arrows {
+  position: static;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  align-items: center;
+ }
+}
+
+.back-to-top {
+ position: fixed;
+ right: 18px;
+ bottom: 18px;
+ width: 46px;
+ height: 46px;
+ border: none;
+ border-radius: 999px;
+ background-color: #1B65B9;
+ color: #ffffff;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ box-shadow: 0 12px 24px rgba(2, 11, 28, 0.25);
+ cursor: pointer;
+ z-index: 1000;
+ transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.back-to-top:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 14px 28px rgba(2, 11, 28, 0.35);
+}
+
+.back-to-top i {
+ font-size: 1rem;
 }
