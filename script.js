@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const approvalsOverlay = document.getElementById('introOverlayApprovals');
     const fourthOverlay = document.getElementById('introOverlayFourth');
 
+    // Used to keep hero intro timings in sync across loops
+    let introCycleId = 0;
+
     // Theme toggle functionality only
     if (toggleBtn && iconEl) {
         toggleBtn.addEventListener('click', function () {
@@ -60,13 +63,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function runIntroSequence() {
+        // Bump the cycle ID so any old timeouts from previous loops do nothing
+        const cycleId = ++introCycleId;
+
         resetIntroOverlays();
 
         // Show first intro overlay (images) after 2 seconds, then hide after animation (~3.5s)
         if (introOverlay) {
             setTimeout(function () {
+                if (cycleId !== introCycleId) return;
                 introOverlay.classList.add('intro-start');
                 setTimeout(function () {
+                    if (cycleId !== introCycleId) return;
                     introOverlay.classList.add('intro-hide');
                 }, 3500);
             }, 2000);
@@ -77,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const firstTotal = 2000 + 3500; // delay + duration of first overlay
 
             setTimeout(function () {
+                if (cycleId !== introCycleId) return;
                 investorOverlay.classList.add('intro-start');
 
                 // Get all elements to animate
@@ -102,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Animate elements sequentially
                 setTimeout(async () => {
+                    if (cycleId !== introCycleId) return;
                     // Animate heading
                     heading.style.opacity = '1';
                     heading.style.transform = 'translateX(0)';
@@ -129,6 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Hide after all animations complete
                 setTimeout(function () {
+                    if (cycleId !== introCycleId) return;
                     investorOverlay.classList.add('intro-hide');
                 }, 8500); // Show for 10 seconds after animations start
 
@@ -142,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const secondTotal = firstTotal + investorDuration;
 
             setTimeout(function () {
+                if (cycleId !== introCycleId) return;
                 approvalsOverlay.classList.add('intro-start');
 
                 const smallText = document.querySelector('.approvals-small-text');
@@ -188,6 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Hide approvals overlay after some time
                 setTimeout(function () {
+                    if (cycleId !== introCycleId) return;
                     approvalsOverlay.classList.add('intro-hide');
                 }, 9000);
 
@@ -202,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const thirdTotal = firstTotal + investorDuration + approvalsDuration;
 
             setTimeout(function () {
+                if (cycleId !== introCycleId) return;
                 fourthOverlay.classList.add('intro-start');
 
                 const smallText = document.querySelector('.fourth-small-text');
@@ -246,8 +260,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }, 100);
 
-                // After some time, pause video for 7s and keep last content visible for 6s
+                // After some time, pause video briefly and then restart the hero intro loop
                 setTimeout(function () {
+                    if (cycleId !== introCycleId) return;
                     const videoEl = document.querySelector('.hero-video-section video');
                     if (videoEl) {
                         try {
@@ -260,11 +275,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // Hide 4th overlay after 2 seconds of paused video
                     setTimeout(function () {
+                        if (cycleId !== introCycleId) return;
                         fourthOverlay.classList.add('intro-hide');
                     }, 2000);
 
                     // After full 3 seconds, restart video and the whole intro sequence
                     setTimeout(function () {
+                        if (cycleId !== introCycleId) return;
                         const v = document.querySelector('.hero-video-section video');
                         if (v) {
                             try {
@@ -332,46 +349,103 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Scroll-triggered content animations (below hero only)
-    const animatedSelectors = [
-        '.invest-eyebrow',
-        '.invest-heading',
-        '.invest-list',
-        '.btn-invest-primary',
-        '.btn-invest-ghost',
-        '.inprinciple-heading',
-        '.inprinciple-list',
-        '.reform-card',
-        '.reforms-cta-btn',
-        '.punjab-leads-heading',
-        '.punjab-lead-card',
-        '.advantage-heading',
-        '.advantage-item-title',
-        '.footer-column-content'
+    // Scroll-triggered content animations per section (below hero only)
+    const sectionConfigs = [
+        {
+            sectionSelector: '.invest-punjab-section',
+            itemSelectors: [
+                '.invest-eyebrow',
+                '.invest-heading',
+                '.invest-list',
+                '.invest-actions .btn-invest-primary',
+                '.invest-actions .btn-invest-ghost',
+                '.invest-image-box'
+            ]
+        },
+        {
+            sectionSelector: '.inprinciple-section',
+            itemSelectors: [
+                '.inprinciple-heading',
+                '.inprinciple-list',
+                '.invest-actions .btn-invest-primary',
+                '.invest-actions .btn-invest-ghost',
+                '.inprinciple-image-box'
+            ]
+        },
+        {
+            sectionSelector: '.reforms-carousel-section',
+            itemSelectors: [
+                '.reform-card',
+                '.reforms-cta-btn'
+            ]
+        },
+        {
+            sectionSelector: '.punjab-leads-section',
+            itemSelectors: [
+                '.punjab-leads-heading',
+                '.punjab-lead-card'
+            ]
+        },
+        {
+            sectionSelector: '.advantage-punjab-section',
+            itemSelectors: [
+                '.advantage-heading',
+                '.advantage-item-title'
+            ]
+        },
+        {
+            sectionSelector: '.footer-fasttrack',
+            itemSelectors: [
+                '.footer-logo-line1',
+                '.footer-logo-line2',
+                '.footer-logo-line3',
+                '.footer-column-content'
+            ]
+        }
     ];
 
-    const animatedElements = [];
+    const sectionMap = new Map();
 
-    animatedSelectors.forEach((selector) => {
-        const nodes = document.querySelectorAll(selector);
-        nodes.forEach((el, index) => {
-            el.classList.add('animate-on-scroll');
+    sectionConfigs.forEach((config) => {
+        const sectionEl = document.querySelector(config.sectionSelector);
+        if (!sectionEl) return;
 
-            const delaySeconds = (index * 0.08).toFixed(2);
-            el.style.transitionDelay = `${delaySeconds}s`;
-
-            animatedElements.push(el);
+        const targets = [];
+        config.itemSelectors.forEach((sel) => {
+            sectionEl.querySelectorAll(sel).forEach((el) => {
+                // Set base hidden state for scroll animation
+                el.classList.add('animate-on-scroll');
+                targets.push(el);
+            });
         });
+
+        if (targets.length) {
+            sectionMap.set(sectionEl, targets);
+        }
     });
 
-    if ('IntersectionObserver' in window) {
+    if ('IntersectionObserver' in window && sectionMap.size) {
         const observer = new IntersectionObserver(
             (entries, obs) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
+                    if (!entry.isIntersecting) return;
+
+                    const targets = sectionMap.get(entry.target);
+                    if (!targets || !targets.length) {
                         obs.unobserve(entry.target);
+                        return;
                     }
+
+                    // Reveal this section's items one by one for a modern feel
+                    targets.forEach((el, index) => {
+                        const delayMs = index * 120; // 0.12s stagger per item
+                        setTimeout(() => {
+                            el.classList.add('is-visible');
+                        }, delayMs);
+                    });
+
+                    sectionMap.delete(entry.target);
+                    obs.unobserve(entry.target);
                 });
             },
             {
@@ -380,8 +454,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         );
 
-        animatedElements.forEach((el) => observer.observe(el));
+        sectionMap.forEach((_targets, sectionEl) => {
+            observer.observe(sectionEl);
+        });
     } else {
-        animatedElements.forEach((el) => el.classList.add('is-visible'));
+        // Fallback: if IntersectionObserver unsupported, show everything
+        sectionMap.forEach((targets) => {
+            targets.forEach((el) => el.classList.add('is-visible'));
+        });
     }
 });

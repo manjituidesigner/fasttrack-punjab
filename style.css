@@ -850,7 +850,6 @@ img.intro-image.intro-image-right {
  cursor: pointer;
  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
  line-height: 24px;
-  animation: fade-in-up-soft 0.6s ease-out both;
 }
 
 .hero-action-card i {
@@ -1739,14 +1738,12 @@ img.intro-image.intro-image-right {
   font-weight: 800;
   text-transform: uppercase;
   line-height: 1.1;
-  animation: fade-in-up-soft 0.6s ease-out both;
  }
 
  .footer-logo-line3 {
   display: block;
   font-size: 1.2rem;
   font-weight: 500;
-  animation: fade-in-up-soft 0.6s ease-out both;
  }
 
  .footer-column-content {
