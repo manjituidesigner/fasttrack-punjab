@@ -291,20 +291,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const prevArrow = document.querySelector('.reforms-arrow-prev');
     const nextArrow = document.querySelector('.reforms-arrow-next');
 
-    function getVisibleCards() {
-        if (!carouselViewport) return 3;
-        const width = carouselViewport.clientWidth;
-        if (width < 576) return 1;
-        if (width < 992) return 2;
-        return 3;
-    }
-
     function scrollByCards(direction) {
         if (!carouselViewport || !carouselTrack) return;
         const cards = carouselTrack.querySelectorAll('.reform-card');
         if (!cards.length) return;
 
-        // Scroll by one full viewport width so 3 cards are fully visible on desktop
         const step = carouselViewport.clientWidth;
         carouselViewport.scrollBy({ left: direction * step, behavior: 'smooth' });
     }
@@ -314,10 +305,83 @@ document.addEventListener('DOMContentLoaded', function () {
         nextArrow.addEventListener('click', () => scrollByCards(1));
     }
 
+    // Punjab Leads carousel arrows
+    const punjabViewport = document.querySelector('.punjab-leads-carousel-viewport');
+    const punjabTrack = document.querySelector('.punjab-leads-carousel-track');
+    const punjabPrev = document.querySelector('.punjab-leads-arrow-prev');
+    const punjabNext = document.querySelector('.punjab-leads-arrow-next');
+
+    function scrollPunjabLeads(direction) {
+        if (!punjabViewport || !punjabTrack) return;
+        const cards = punjabTrack.querySelectorAll('.punjab-lead-card');
+        if (!cards.length) return;
+
+        const step = punjabViewport.clientWidth;
+        punjabViewport.scrollBy({ left: direction * step, behavior: 'smooth' });
+    }
+
+    if (punjabPrev && punjabNext) {
+        punjabPrev.addEventListener('click', () => scrollPunjabLeads(-1));
+        punjabNext.addEventListener('click', () => scrollPunjabLeads(1));
+    }
+
     const backToTopBtn = document.getElementById('backToTop');
     if (backToTopBtn) {
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+    }
+
+    // Scroll-triggered content animations (below hero only)
+    const animatedSelectors = [
+        '.invest-eyebrow',
+        '.invest-heading',
+        '.invest-list',
+        '.btn-invest-primary',
+        '.btn-invest-ghost',
+        '.inprinciple-heading',
+        '.inprinciple-list',
+        '.reform-card',
+        '.reforms-cta-btn',
+        '.punjab-leads-heading',
+        '.punjab-lead-card',
+        '.advantage-heading',
+        '.advantage-item-title',
+        '.footer-column-content'
+    ];
+
+    const animatedElements = [];
+
+    animatedSelectors.forEach((selector) => {
+        const nodes = document.querySelectorAll(selector);
+        nodes.forEach((el, index) => {
+            el.classList.add('animate-on-scroll');
+
+            const delaySeconds = (index * 0.08).toFixed(2);
+            el.style.transitionDelay = `${delaySeconds}s`;
+
+            animatedElements.push(el);
+        });
+    });
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+            (entries, obs) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.25,
+                rootMargin: '0px 0px -10% 0px',
+            }
+        );
+
+        animatedElements.forEach((el) => observer.observe(el));
+    } else {
+        animatedElements.forEach((el) => el.classList.add('is-visible'));
     }
 });
