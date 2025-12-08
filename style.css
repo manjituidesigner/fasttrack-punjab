@@ -229,7 +229,7 @@ img.intro-image.intro-image-right {
  .hero-video-section {
   min-height: 70vh;
   height: 70vh;
-  font-size: 90%;
+  font-size: 85%;
  }
 
  .hero-video-section video {
@@ -242,29 +242,29 @@ img.intro-image.intro-image-right {
  
  /* Global typography tweaks for small screens */
  body {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
  }
 
  h1, .h1 {
-  font-size: 1.9rem;
+  font-size: 1.7rem;
  }
 
  h2, .h2 {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
  }
 
  h3, .h3 {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
  }
 
  /* Investor First section */
  .investor-heading {
-  font-size: 2.8rem !important; /* Reduced from larger size */
-  line-height: 1.1;
+  font-size: 2.2rem !important; /* Smaller for mobile */
+  line-height: 1.05;
  }
  
  .investor-subheading {
-  font-size: 1.4rem !important; /* Reduced from 1.7rem */
+  font-size: 1.1rem !important;
   margin-bottom: 1.5rem !important;
  }
  
@@ -275,8 +275,8 @@ img.intro-image.intro-image-right {
  }
  
  .investor-pill-item {
-  font-size: 0.95rem !important; /* Slightly smaller pill text */
-  padding: 0.4rem 1.3rem !important;
+  font-size: 0.85rem !important;
+  padding: 0.35rem 1.1rem !important;
   text-align: center;
   line-height: 1.15;
   background-color: rgba(11, 41, 80, 0.9);
@@ -291,19 +291,19 @@ img.intro-image.intro-image-right {
  
  /* Approvals section */
  .approvals-heading {
-  font-size: 2.5rem !important; /* Reduced from larger size */
-  line-height: 1.1;
+  font-size: 2.1rem !important;
+  line-height: 1.05;
  }
  
  .approvals-small-text {
-  font-size: 1.2rem !important; /* Reduced from 1.6rem */
+  font-size: 1rem !important;
   margin-bottom: 0.5rem !important;
  }
  
  .approvals-point-item {
-  font-size: 16px !important; /* Reduced from 18px */
-  padding: 0.45rem 1.25rem !important;
-  line-height: 1.3;
+  font-size: 14px !important;
+  padding: 0.4rem 1.1rem !important;
+  line-height: 1.25;
   text-align: center;
  }
  
@@ -347,10 +347,11 @@ img.intro-image.intro-image-right {
  .fourth-point-item {
 	justify-content: center;
 	text-align: center !important;
-	line-height: 1.3 !important;
-	padding: 0.45rem 1.7rem !important;
+	font-size: 14px !important;
+	line-height: 1.25 !important;
+	padding: 0.4rem 1.3rem !important;
 	width: auto;
-	margin: 0.25rem auto;
+	margin: 0.2rem auto;
  }
 
  .fourth-point-item i {
@@ -360,6 +361,16 @@ img.intro-image.intro-image-right {
  .fourth-small-text,
  .fourth-heading {
   display: block;
+ }
+
+ .fourth-small-text {
+  font-size: 0.85rem !important;
+  letter-spacing: 0.06em;
+ }
+
+ .fourth-heading {
+  font-size: 1.6rem !important;
+  line-height: 1.1;
  }
 
  /* Invest Punjab content section typography */
@@ -887,7 +898,35 @@ img.intro-image.intro-image-right {
  }
 
  .hero-action-card {
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 0.55rem 0.9rem;
+  font-size: 1rem;
+  gap: 0.9rem;
+ }
+
+ .hero-action-card i {
+  font-size: 1.4rem;
+ }
+
+ /* Pull the first content section closer to the hero buttons on mobile */
+ .invest-punjab-section {
+  padding-top: 2rem;
+ }
+
+ /* In-Principle section spacing and image size on mobile */
+ .inprinciple-section {
+  padding-top: 2.2rem;
+  padding-bottom: 3rem;
+ }
+
+ .inprinciple-section .row {
+  padding-top: 1.25rem;
+  padding-bottom: 1.5rem;
+ }
+
+ .inprinciple-image-box {
+  max-width: 92%;
+  margin: 1.25rem auto 1.75rem;
  }
 }
 
@@ -1279,14 +1318,18 @@ img.intro-image.intro-image-right {
 
  .punjab-leads-carousel-wrapper {
   gap: 0.75rem;
+  display: block; /* stack arrows and viewport so one card shows cleanly */
  }
 
  .punjab-lead-card {
   flex: 0 0 100%;
+  min-height: auto;           /* let card height follow image */
+  background-color: transparent; /* remove extra black band */
  }
 
  .punjab-lead-image img {
-  height: 220px;
+  height: auto;      /* allow image to dictate card height */
+  object-fit: cover; /* keep full coverage of the card width */
  }
 }
 
@@ -1441,12 +1484,12 @@ img.intro-image.intro-image-right {
 
 @media (max-width: 767.98px) {
  .reforms-carousel-section {
-  padding: 2.5rem 0 3rem;
+  padding: 2.25rem 0 2.75rem;
  }
 
  .reforms-carousel-wrapper {
   display: block;
-  padding: 0 1.25rem;
+  padding: 0 1.5rem; /* a bit more side space around the card */
  }
 
  .reforms-carousel-viewport {
@@ -1455,7 +1498,9 @@ img.intro-image.intro-image-right {
 
  .reform-card {
   flex: 0 0 100%;
- }
+  max-width: 100%;
+  margin: 0 auto;        /* center the card */
+  }
 
  .reforms-carousel-track {
   gap: 0;
@@ -1463,13 +1508,13 @@ img.intro-image.intro-image-right {
 
  .reforms-arrows {
   position: static;
-  margin-top: 1rem;
+  margin-top: 1.5rem;     /* more space between card and arrows */
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1.75rem;
   align-items: center;
- }
+  }
 }
 
 .reforms-cta {
