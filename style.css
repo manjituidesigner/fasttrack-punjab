@@ -257,6 +257,21 @@ img.intro-image.intro-image-right {
   font-size: 1.1rem;
  }
 
+ /* Global content spacing on mobile: add side padding so text/images
+    dont touch screen edges (exclude Punjab Leads carousel so arrows stay aligned) */
+ section:not(.hero-video-section):not(.punjab-leads-section) {
+  padding-left: 1.1rem;
+  padding-right: 1.1rem;
+ }
+
+ /* Slightly smaller key section headings on mobile for better hierarchy */
+ .invest-heading,
+ .inprinciple-heading,
+ .punjab-leads-heading,
+ .advantage-heading {
+  font-size: 1.35rem;
+ }
+
  /* Investor First section */
  .investor-heading {
   font-size: 2.2rem !important; /* Smaller for mobile */
@@ -1318,7 +1333,9 @@ img.intro-image.intro-image-right {
 
  .punjab-leads-carousel-wrapper {
   gap: 0.75rem;
-  display: block; /* stack arrows and viewport so one card shows cleanly */
+  display: block; /* mobile: show one card cleanly */
+  padding: 0 1.5rem 2.4rem; /* side & bottom padding similar to reforms card */
+  position: relative;       /* for bottom-centered arrows */
  }
 
  .punjab-lead-card {
@@ -1331,6 +1348,22 @@ img.intro-image.intro-image-right {
   height: auto;      /* allow image to dictate card height */
   object-fit: cover; /* keep full coverage of the card width */
  }
+
+ /* Bottom-centered arrows on mobile, similar to reforms carousel */
+  .punjab-leads-arrow {
+   position: absolute;
+   bottom: -22px;
+  }
+
+  .punjab-leads-arrow-prev {
+   left: 50%;
+   transform: translateX(-120%);
+  }
+
+  .punjab-leads-arrow-next {
+   left: 50%;
+   transform: translateX(20%);
+  }
 }
 
 .reforms-carousel-section {
@@ -1598,7 +1631,7 @@ img.intro-image.intro-image-right {
 
  .advantage-center {
   position: absolute;
-  top: 36%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -52%);
   z-index: 2;
@@ -1698,42 +1731,52 @@ img.intro-image.intro-image-right {
 
  @media (max-width: 767.98px) {
   .advantage-punjab-section {
-   padding: 2.5rem 0 3rem;
+   padding: 2.5rem 0 4.5rem; /* extra bottom space so bottom icon doesn't touch edge */
   }
 
   .advantage-layout {
-   max-width: 420px;
-   min-height: 300px;
+   max-width: 380px;
+   min-height: 320px;
   }
 
   .advantage-center img {
-   max-width: 220px;
+   max-width: 190px; /* slightly smaller map on mobile */
+  }
+
+  /* Slightly smaller titles on mobile so text doesn't wrap awkwardly */
+  .advantage-item-title {
+   font-size: 0.85rem;
+   line-height: 1.4;
   }
 
   .advantage-item-1 {
-   top: 15%;
-   left: 20%;
+   top: 8%;
+   left: 12%;
   }
 
   .advantage-item-2 {
-   top: 15%;
-   left: 80%;
+   top: 16%;
+   left: 82%;
   }
 
   .advantage-item-3 {
-   top: 65%;
-   left: 20%;
+   top: 74%;
+   left: 12%;
   }
 
   .advantage-item-4 {
-   top: 65%;
-   left: 80%;
+   top: 78%;
+   left: 90%;
   }
 
   .advantage-item-5 {
-   top: 98%;
+   top: 83%;
    left: 50%;
   }
+
+  .advantage-item.advantage-item-5 img {
+    max-width: 75px;
+}
  }
 
  /* FastTrack Punjab footer */
