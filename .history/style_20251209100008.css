@@ -1433,10 +1433,11 @@ img.intro-image.intro-image-right {
  flex-direction: column;
  gap: 0.65rem;
  max-height: 265px;
+ overflow-y: auto;
 }
 
 .reform-card-heading {
- font-size: 1.25rem;
+ font-size: 1.02rem;
  line-height: 1.4;
  margin: 0;
  font-weight: 500;
@@ -1450,8 +1451,6 @@ img.intro-image.intro-image-right {
  margin: 0;
  font-size: 0.92rem;
  line-height: 1.5;
- flex: 1 1 auto;
- overflow-y: auto;
 }
 
 .reform-card-list li + li {
@@ -1492,17 +1491,17 @@ img.intro-image.intro-image-right {
  color: #ffffff;
 }
 
-.reform-card-list::-webkit-scrollbar {
+.reform-card-body::-webkit-scrollbar {
  width: 6px;
 }
 
-.reform-card-list::-webkit-scrollbar-track {
- background-color: #cbd5e1;
+.reform-card-body::-webkit-scrollbar-track {
+ background-color: #e5e7eb;
  border-radius: 999px;
 }
 
-.reform-card-list::-webkit-scrollbar-thumb {
- background-color: #94a3b8;
+.reform-card-body::-webkit-scrollbar-thumb {
+ background-color: #cbd5f5;
  border-radius: 999px;
 }
 
@@ -1632,7 +1631,7 @@ img.intro-image.intro-image-right {
 
  .advantage-center {
   position: absolute;
-  top: 40%;
+  top: 36%;
   left: 50%;
   transform: translate(-50%, -52%);
   z-index: 2;
@@ -1752,7 +1751,7 @@ img.intro-image.intro-image-right {
 
   .advantage-item-1 {
    top: 8%;
-   left: 12%;
+   left: 18%;
   }
 
   .advantage-item-2 {
@@ -1761,13 +1760,13 @@ img.intro-image.intro-image-right {
   }
 
   .advantage-item-3 {
-   top: 74%;
-   left: 12%;
+   top: 66%;
+   left: 18%;
   }
 
   .advantage-item-4 {
-   top: 78%;
-   left: 90%;
+   top: 66%;
+   left: 82%;
   }
 
   .advantage-item-5 {

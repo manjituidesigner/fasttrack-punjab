@@ -258,8 +258,8 @@ img.intro-image.intro-image-right {
  }
 
  /* Global content spacing on mobile: add side padding so text/images
-    dont touch screen edges (exclude Punjab Leads carousel so arrows stay aligned) */
- section:not(.hero-video-section):not(.punjab-leads-section) {
+    dont touch screen edges */
+ section:not(.hero-video-section) {
   padding-left: 1.1rem;
   padding-right: 1.1rem;
  }
@@ -1333,9 +1333,7 @@ img.intro-image.intro-image-right {
 
  .punjab-leads-carousel-wrapper {
   gap: 0.75rem;
-  display: block; /* mobile: show one card cleanly */
-  padding: 0 1.5rem 2.4rem; /* side & bottom padding similar to reforms card */
-  position: relative;       /* for bottom-centered arrows */
+  display: block; /* stack arrows and viewport so one card shows cleanly */
  }
 
  .punjab-lead-card {
@@ -1348,22 +1346,6 @@ img.intro-image.intro-image-right {
   height: auto;      /* allow image to dictate card height */
   object-fit: cover; /* keep full coverage of the card width */
  }
-
- /* Bottom-centered arrows on mobile, similar to reforms carousel */
-  .punjab-leads-arrow {
-   position: absolute;
-   bottom: -22px;
-  }
-
-  .punjab-leads-arrow-prev {
-   left: 50%;
-   transform: translateX(-120%);
-  }
-
-  .punjab-leads-arrow-next {
-   left: 50%;
-   transform: translateX(20%);
-  }
 }
 
 .reforms-carousel-section {
@@ -1433,10 +1415,11 @@ img.intro-image.intro-image-right {
  flex-direction: column;
  gap: 0.65rem;
  max-height: 265px;
+ overflow-y: auto;
 }
 
 .reform-card-heading {
- font-size: 1.25rem;
+ font-size: 1.02rem;
  line-height: 1.4;
  margin: 0;
  font-weight: 500;
@@ -1450,8 +1433,6 @@ img.intro-image.intro-image-right {
  margin: 0;
  font-size: 0.92rem;
  line-height: 1.5;
- flex: 1 1 auto;
- overflow-y: auto;
 }
 
 .reform-card-list li + li {
@@ -1492,17 +1473,17 @@ img.intro-image.intro-image-right {
  color: #ffffff;
 }
 
-.reform-card-list::-webkit-scrollbar {
+.reform-card-body::-webkit-scrollbar {
  width: 6px;
 }
 
-.reform-card-list::-webkit-scrollbar-track {
- background-color: #cbd5e1;
+.reform-card-body::-webkit-scrollbar-track {
+ background-color: #e5e7eb;
  border-radius: 999px;
 }
 
-.reform-card-list::-webkit-scrollbar-thumb {
- background-color: #94a3b8;
+.reform-card-body::-webkit-scrollbar-thumb {
+ background-color: #cbd5f5;
  border-radius: 999px;
 }
 
@@ -1632,7 +1613,7 @@ img.intro-image.intro-image-right {
 
  .advantage-center {
   position: absolute;
-  top: 40%;
+  top: 36%;
   left: 50%;
   transform: translate(-50%, -52%);
   z-index: 2;
@@ -1732,52 +1713,42 @@ img.intro-image.intro-image-right {
 
  @media (max-width: 767.98px) {
   .advantage-punjab-section {
-   padding: 2.5rem 0 4.5rem; /* extra bottom space so bottom icon doesn't touch edge */
+   padding: 2.5rem 0 3rem;
   }
 
   .advantage-layout {
-   max-width: 380px;
-   min-height: 320px;
+   max-width: 420px;
+   min-height: 300px;
   }
 
   .advantage-center img {
-   max-width: 190px; /* slightly smaller map on mobile */
-  }
-
-  /* Slightly smaller titles on mobile so text doesn't wrap awkwardly */
-  .advantage-item-title {
-   font-size: 0.85rem;
-   line-height: 1.4;
+   max-width: 220px;
   }
 
   .advantage-item-1 {
-   top: 8%;
-   left: 12%;
+   top: 15%;
+   left: 20%;
   }
 
   .advantage-item-2 {
-   top: 16%;
-   left: 82%;
+   top: 15%;
+   left: 80%;
   }
 
   .advantage-item-3 {
-   top: 74%;
-   left: 12%;
+   top: 65%;
+   left: 20%;
   }
 
   .advantage-item-4 {
-   top: 78%;
-   left: 90%;
+   top: 65%;
+   left: 80%;
   }
 
   .advantage-item-5 {
-   top: 83%;
+   top: 98%;
    left: 50%;
   }
-
-  .advantage-item.advantage-item-5 img {
-    max-width: 75px;
-}
  }
 
  /* FastTrack Punjab footer */
