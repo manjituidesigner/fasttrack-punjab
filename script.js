@@ -352,6 +352,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // Scroll-triggered content animations per section (below hero only)
     const sectionConfigs = [
         {
+            sectionSelector: '.investor-first-section',
+            itemSelectors: [
+                '.investor-first-header',
+                '.investor-first-media',
+                '.investor-first-copy',
+                '.investor-first-subheading',
+                '.investor-first-list li'
+            ]
+        },
+        {
             sectionSelector: '.invest-punjab-section',
             itemSelectors: [
                 '.invest-eyebrow',
@@ -401,66 +411,78 @@ document.addEventListener('DOMContentLoaded', function () {
                 '.footer-logo-line3',
                 '.footer-column-content'
             ]
+        },
+        {
+            sectionSelector: 'body',
+            itemSelectors: [
+                '.invest-eyebrow.text-center'
+            ]
         }
     ];
 
-    const sectionMap = new Map();
+    const animationTargets = [];
 
     sectionConfigs.forEach((config) => {
-        const sectionEl = document.querySelector(config.sectionSelector);
-        if (!sectionEl) return;
+        const sectionEls = document.querySelectorAll(config.sectionSelector);
+        if (!sectionEls.length) return;
 
-        const targets = [];
-        config.itemSelectors.forEach((sel) => {
-            sectionEl.querySelectorAll(sel).forEach((el) => {
-                // Set base hidden state for scroll animation
-                el.classList.add('animate-on-scroll');
-                targets.push(el);
-            });
-        });
+        sectionEls.forEach((sectionEl) => {
+            config.itemSelectors.forEach((sel) => {
+                sectionEl.querySelectorAll(sel).forEach((el, index) => {
+                    // Set base hidden state for scroll animation
+                    el.classList.add('animate-on-scroll');
 
-        if (targets.length) {
-            sectionMap.set(sectionEl, targets);
-        }
-    });
-
-    if ('IntersectionObserver' in window && sectionMap.size) {
-        const observer = new IntersectionObserver(
-            (entries, obs) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return;
-
-                    const targets = sectionMap.get(entry.target);
-                    if (!targets || !targets.length) {
-                        obs.unobserve(entry.target);
-                        return;
+                    if (
+                        el.matches(
+                            '.invest-heading, .inprinciple-heading, .punjab-leads-heading, .advantage-heading'
+                        )
+                    ) {
+                        el.classList.add('from-left');
+                    } else if (el.matches('.invest-eyebrow')) {
+                        el.classList.add('from-right');
+                    } else if (el.matches('.investor-first-media')) {
+                        el.classList.add('from-left');
+                    } else if (el.matches('.investor-first-header, .investor-first-copy, .investor-first-subheading')) {
+                        el.classList.add('from-right');
                     }
 
-                    // Reveal this section's items one by one for a modern feel
-                    targets.forEach((el, index) => {
-                        const delayMs = index * 120; // 0.12s stagger per item
-                        setTimeout(() => {
-                            el.classList.add('is-visible');
-                        }, delayMs);
-                    });
+                    if (el.matches('.investor-first-list li')) {
+                        el.style.transitionDelay = `${index * 120}ms`;
+                    }
 
-                    sectionMap.delete(entry.target);
-                    obs.unobserve(entry.target);
+                    animationTargets.push(el);
+                });
+            });
+        });
+    });
+
+    if ('IntersectionObserver' in window && animationTargets.length) {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const el = entry.target;
+
+                    if (entry.isIntersecting) {
+                        // Restart transition every time by toggling and forcing a reflow
+                        el.classList.remove('is-visible');
+                        void el.offsetWidth;
+                        requestAnimationFrame(() => {
+                            el.classList.add('is-visible');
+                        });
+                    } else {
+                        el.classList.remove('is-visible');
+                    }
                 });
             },
             {
-                threshold: 0.25,
-                rootMargin: '0px 0px -10% 0px',
+                threshold: 0.35,
+                rootMargin: '0px 0px -5% 0px',
             }
         );
 
-        sectionMap.forEach((_targets, sectionEl) => {
-            observer.observe(sectionEl);
-        });
+        animationTargets.forEach((el) => observer.observe(el));
     } else {
         // Fallback: if IntersectionObserver unsupported, show everything
-        sectionMap.forEach((targets) => {
-            targets.forEach((el) => el.classList.add('is-visible'));
-        });
+        animationTargets.forEach((el) => el.classList.add('is-visible'));
     }
 });
