@@ -6,8 +6,126 @@ document.addEventListener('DOMContentLoaded', function () {
     const approvalsOverlay = document.getElementById('introOverlayApprovals');
     const fourthOverlay = document.getElementById('introOverlayFourth');
 
+    const heroActionStrip = document.querySelector('.hero-action-strip');
+    const heroVideo = document.querySelector('.hero-video-section video');
+
+    // Keep the hero background video playing reliably (some browsers pause it after long idle)
+    function ensureHeroVideoPlaying(videoEl) {
+        if (!videoEl) return;
+
+        // Reinforce required attributes for autoplay
+        videoEl.muted = true;
+        videoEl.loop = true;
+        videoEl.playsInline = true;
+
+        if (document.hidden) return;
+
+        if (videoEl.paused || videoEl.ended) {
+            const p = videoEl.play();
+            if (p && typeof p.catch === 'function') {
+                p.catch(() => {
+                    // ignore autoplay / resume failures
+                });
+            }
+        }
+    }
+
+    if (heroVideo) {
+        document.addEventListener('visibilitychange', () => {
+            ensureHeroVideoPlaying(heroVideo);
+        });
+
+        heroVideo.addEventListener('pause', () => {
+            ensureHeroVideoPlaying(heroVideo);
+        });
+
+        heroVideo.addEventListener('ended', () => {
+            try {
+                heroVideo.currentTime = 0;
+            } catch (e) {
+                // ignore
+            }
+            ensureHeroVideoPlaying(heroVideo);
+        });
+
+        heroVideo.addEventListener('stalled', () => {
+            ensureHeroVideoPlaying(heroVideo);
+        });
+
+        heroVideo.addEventListener('waiting', () => {
+            ensureHeroVideoPlaying(heroVideo);
+        });
+    }
+
+    // Keep hero action buttons in sync with the video playback
+    // Hide on (re)start, then show again after 8 seconds each time the video starts/loops
+    let heroButtonsTimeoutId = null;
+
+    function scheduleHeroButtonsFromVideo() {
+        if (!heroActionStrip) return;
+
+        // Always hide first, then re-show after delay
+        heroActionStrip.classList.remove('is-visible');
+
+        if (heroButtonsTimeoutId) {
+            clearTimeout(heroButtonsTimeoutId);
+        }
+
+        heroButtonsTimeoutId = setTimeout(() => {
+            heroActionStrip.classList.add('is-visible');
+        }, 8000);
+    }
+
+    if (heroVideo && heroActionStrip) {
+        // Only (re)trigger the delay when a NEW video cycle starts.
+        // This avoids hiding buttons when the video emits play again due to tab focus changes.
+        let lastTime = 0;
+        let scheduledThisCycle = false;
+
+        function maybeScheduleForCycleStart() {
+            if (scheduledThisCycle) return;
+            if (heroVideo.currentTime <= 0.25) {
+                scheduledThisCycle = true;
+                scheduleHeroButtonsFromVideo();
+            }
+        }
+
+        heroVideo.addEventListener('timeupdate', () => {
+            const t = heroVideo.currentTime;
+            if ((t + 0.25) < lastTime && t <= 0.25) {
+                scheduledThisCycle = false;
+                maybeScheduleForCycleStart();
+            }
+            maybeScheduleForCycleStart();
+            lastTime = t;
+        });
+
+        maybeScheduleForCycleStart();
+    } else if (heroActionStrip) {
+        // Fallback: if no video element found, keep previous one-time 8s delay
+        setTimeout(() => {
+            heroActionStrip.classList.add('is-visible');
+        }, 8000);
+    }
+
     // Used to keep hero intro timings in sync across loops
     let introCycleId = 0;
+
+    // Track timeouts used by the hero intro overlays so they don't stack up over time
+    const introTimeoutIds = [];
+
+    function clearIntroTimeouts() {
+        while (introTimeoutIds.length) {
+            const id = introTimeoutIds.pop();
+            clearTimeout(id);
+        }
+    }
+
+    function setIntroTimeout(fn, delay) {
+        const id = setTimeout(fn, delay);
+        introTimeoutIds.push(id);
+        return id;
+    }
 
     // Theme toggle functionality only
     if (toggleBtn && iconEl) {
@@ -66,14 +184,17 @@ document.addEventListener('DOMContentLoaded', function () {
         // Bump the cycle ID so any old timeouts from previous loops do nothing
         const cycleId = ++introCycleId;
 
+        // Ensure no timers from previous cycles are still pending
+        clearIntroTimeouts();
+
         resetIntroOverlays();
 
         // Show first intro overlay (images) after 2 seconds, then hide after animation (~3.5s)
         if (introOverlay) {
-            setTimeout(function () {
+            setIntroTimeout(function () {
                 if (cycleId !== introCycleId) return;
                 introOverlay.classList.add('intro-start');
-                setTimeout(function () {
+                setIntroTimeout(function () {
                     if (cycleId !== introCycleId) return;
                     introOverlay.classList.add('intro-hide');
                 }, 3500);
@@ -84,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (investorOverlay) {
             const firstTotal = 2000 + 3500; // delay + duration of first overlay
 
-            setTimeout(function () {
+            setIntroTimeout(function () {
                 if (cycleId !== introCycleId) return;
                 investorOverlay.classList.add('intro-start');
 
@@ -110,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 // Animate elements sequentially
-                setTimeout(async () => {
+                setIntroTimeout(async () => {
                     if (cycleId !== introCycleId) return;
                     // Animate heading
                     heading.style.opacity = '1';
@@ -127,7 +248,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     for (let i = 0; i < pillItems.length; i++) {
                         await new Promise(resolve => {
-                            setTimeout(() => {
+                            setIntroTimeout(() => {
+                                if (cycleId !== introCycleId) return;
                                 pillItems[i].style.opacity = '1';
                                 pillItems[i].style.transform = 'translateX(0)';
                                 pillItems[i].classList.add('investor-pill-pop');
@@ -138,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 100);
 
                 // Hide after all animations complete
-                setTimeout(function () {
+                setIntroTimeout(function () {
                     if (cycleId !== introCycleId) return;
                     investorOverlay.classList.add('intro-hide');
                 }, 8500); // Show for 10 seconds after animations start
@@ -152,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const investorDuration = 10000;  // as used above
             const secondTotal = firstTotal + investorDuration;
 
-            setTimeout(function () {
+            setIntroTimeout(function () {
                 if (cycleId !== introCycleId) return;
                 approvalsOverlay.classList.add('intro-start');
 
@@ -175,13 +297,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     item.style.transform = 'translateY(20px)';
                 });
 
-                setTimeout(async () => {
+                setIntroTimeout(async () => {
+                    if (cycleId !== introCycleId) return;
                     if (smallText) {
                         smallText.classList.add('approvals-small-pop');
                     }
 
                     await new Promise(resolve => setTimeout(resolve, 250));
 
+                    if (cycleId !== introCycleId) return;
                     if (heading) {
                         heading.classList.add('approvals-heading-pop');
                     }
@@ -190,7 +314,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     for (let i = 0; i < points.length; i++) {
                         await new Promise(resolve => {
-                            setTimeout(() => {
+                            setIntroTimeout(() => {
+                                if (cycleId !== introCycleId) return;
                                 points[i].classList.add('approvals-pill-pop');
                                 resolve();
                             }, 180 * i);
@@ -199,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 100);
 
                 // Hide approvals overlay after some time
-                setTimeout(function () {
+                setIntroTimeout(function () {
                     if (cycleId !== introCycleId) return;
                     approvalsOverlay.classList.add('intro-hide');
                 }, 9000);
@@ -214,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const approvalsDuration = 9000;
             const thirdTotal = firstTotal + investorDuration + approvalsDuration;
 
-            setTimeout(function () {
+            setIntroTimeout(function () {
                 if (cycleId !== introCycleId) return;
                 fourthOverlay.classList.add('intro-start');
 
@@ -237,13 +362,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     item.style.transform = 'translateY(20px)';
                 });
 
-                setTimeout(async () => {
+                setIntroTimeout(async () => {
+                    if (cycleId !== introCycleId) return;
                     if (smallText) {
                         smallText.classList.add('approvals-small-pop');
                     }
 
                     await new Promise(resolve => setTimeout(resolve, 250));
 
+                    if (cycleId !== introCycleId) return;
                     if (heading) {
                         heading.classList.add('approvals-heading-pop');
                     }
@@ -252,7 +379,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     for (let i = 0; i < points.length; i++) {
                         await new Promise(resolve => {
-                            setTimeout(() => {
+                            setIntroTimeout(() => {
+                                if (cycleId !== introCycleId) return;
                                 points[i].classList.add('approvals-pill-pop');
                                 resolve();
                             }, 200 * i);
@@ -260,47 +388,51 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }, 100);
 
-                // After some time, pause video briefly and then restart the hero intro loop
-                setTimeout(function () {
+                // Hide fourth overlay after some time.
+                // The next cycle will be restarted based on the actual video loop (see below).
+                setIntroTimeout(function () {
                     if (cycleId !== introCycleId) return;
-                    const videoEl = document.querySelector('.hero-video-section video');
-                    if (videoEl) {
-                        try {
-                            // Pause video at end of cycle
-                            videoEl.pause();
-                        } catch (e) {
-                            // ignore playback errors
-                        }
-                    }
-
-                    // Hide 4th overlay after 2 seconds of paused video
-                    setTimeout(function () {
-                        if (cycleId !== introCycleId) return;
-                        fourthOverlay.classList.add('intro-hide');
-                    }, 2000);
-
-                    // After full 3 seconds, restart video and the whole intro sequence
-                    setTimeout(function () {
-                        if (cycleId !== introCycleId) return;
-                        const v = document.querySelector('.hero-video-section video');
-                        if (v) {
-                            try {
-                                v.currentTime = 0;
-                                v.play();
-                            } catch (e) {
-                                // ignore playback errors
-                            }
-                        }
-                        runIntroSequence();
-                    }, 3000);
+                    fourthOverlay.classList.add('intro-hide');
                 }, 9000);
 
             }, thirdTotal);
         }
     }
 
-    // Start the looping intro sequence
-    runIntroSequence();
+    // Start/restart the looping intro sequence based on the actual video loop.
+    // This prevents timer drift and overlay stacking after long runs.
+    const introVideo = document.querySelector('.hero-video-section video');
+    if (introVideo) {
+        let lastIntroVideoTime = 0;
+        let hasStartedOnce = false;
+
+        function restartIntroForNewCycle() {
+            hasStartedOnce = true;
+            runIntroSequence();
+        }
+
+        introVideo.addEventListener('play', () => {
+            if (!hasStartedOnce) {
+                restartIntroForNewCycle();
+            }
+        });
+
+        introVideo.addEventListener('timeupdate', () => {
+            const t = introVideo.currentTime;
+            if (t + 0.5 < lastIntroVideoTime) {
+                restartIntroForNewCycle();
+            }
+            lastIntroVideoTime = t;
+        });
+
+        // Mobile browsers may block autoplay and therefore never emit play/timeupdate.
+        // Always run the intro sequence once on load so the first scene is not missing.
+        // If/when the video starts/loops, the handlers above will keep things in sync.
+        ensureHeroVideoPlaying(introVideo);
+        restartIntroForNewCycle();
+    } else {
+        runIntroSequence();
+    }
 
     // Reforms carousel arrows
     const carouselViewport = document.querySelector('.reforms-carousel-viewport');
